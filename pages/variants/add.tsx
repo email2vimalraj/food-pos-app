@@ -2,11 +2,10 @@ import type { NextPage } from "next";
 import React from "react";
 import useSWR from "swr";
 
-import fetcher from "../lib/fetcher";
+import fetcher from "../../lib/fetcher";
 import type { ProductVariantGroup } from ".prisma/client";
 
-const Variant: NextPage = () => {
-  const { data: variants, error: variantError } = useSWR<any>('/api/variant', fetcher)
+const AddVariant: NextPage = () => {
   const { data: variantgroups, error: variantGroupError } = useSWR<any>('/api/variantgroup', fetcher)
   const [variant, setVariant] = React.useState<string>("")
   const [variantPrice, setVariantPrice] = React.useState<number>(0.00)
@@ -33,8 +32,8 @@ const Variant: NextPage = () => {
     setVariantPrice(0.00)
   }
 
-  if (variantError || variantGroupError) return <div>An error occured.</div>
-  if (!variants || !variantgroups) return <div>Loading ...</div>
+  if (variantGroupError) return <div>An error occured.</div>
+  if (!variantgroups) return <div>Loading ...</div>
 
   return (
     <>
@@ -50,14 +49,8 @@ const Variant: NextPage = () => {
         </select>
         <button onClick={() => handleAddVariant()}>Add Variant Group</button>
       </div>
-
-      <ul>
-        {variants.map((variant: any) => {
-          return <li key={variant.id}>{variant.name} - {variant.price} - {variant.variantGroup.name}</li>
-        })}
-      </ul>
     </>
   )
 }
 
-export default Variant;
+export default AddVariant;
