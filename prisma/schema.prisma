@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                    Int                  @id @default(autoincrement())
+  name                  String               @db.VarChar(255)
+  price                 Float                @default(0.0)
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  variantGroup          ProductVariantGroup? @relation(fields: [productVariantGroupId], references: [id])
+  category              ProductCategory      @relation(fields: [categoryId], references: [id])
+  categoryId            Int
+  productVariantGroupId Int?
+
+  @@unique([name, categoryId], name: "name_category_id_unique_key")
+  @@unique([name, productVariantGroupId], name: "name_product_variant_group_id_unique_key")
+}
+
+model ProductCategory {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+model ProductVariant {
+  id             Int                 @id @default(autoincrement())
+  name           String              @db.VarChar(255)
+  price          Float               @default(0.0)
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  variantGroup   ProductVariantGroup @relation(fields: [variantGroupId], references: [id])
+  variantGroupId Int
+
+  @@unique([name, variantGroupId], name: "name_variant_group_id_unique_key")
+}
+
+model ProductVariantGroup {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique @db.VarChar(255)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  ProductVariant ProductVariant[]
+  Product        Product[]
+}
