@@ -16,10 +16,12 @@ model Product {
   price                 Float                @default(0.0)
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
-  variantGroup          ProductVariantGroup? @relation(fields: [productVariantGroupId], references: [id])
   category              ProductCategory      @relation(fields: [categoryId], references: [id])
   categoryId            Int
+  variantGroup          ProductVariantGroup? @relation(fields: [productVariantGroupId], references: [id])
   productVariantGroupId Int?
+  taxGroup              TaxGroup             @relation(fields: [taxGroupId], references: [id])
+  taxGroupId            Int
 
   @@unique([name, categoryId], name: "name_category_id_unique_key")
   @@unique([name, productVariantGroupId], name: "name_product_variant_group_id_unique_key")
@@ -30,7 +32,7 @@ model ProductCategory {
   name      String    @unique @db.VarChar(255)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Product   Product[]
+  product   Product[]
 }
 
 model ProductVariant {
@@ -50,6 +52,25 @@ model ProductVariantGroup {
   name           String           @unique @db.VarChar(255)
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
-  ProductVariant ProductVariant[]
-  Product        Product[]
+  productVariant ProductVariant[]
+  product        Product[]
+}
+
+model Tax {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique @db.VarChar(255)
+  taxPercent Float    @default(0.0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  taxGroup   TaxGroup @relation(fields: [taxGroupId], references: [id])
+  taxGroupId Int
+}
+
+model TaxGroup {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  tax       Tax[]
+  product   Product[]
 }

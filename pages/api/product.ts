@@ -18,15 +18,15 @@ export default async function handle(
   }
 
   if (req.method === "POST") {
-    const { name, price, categoryId, productVariantGroupId } = JSON.parse(
-      req.body
-    );
+    const { name, price, categoryId, productVariantGroupId, taxGroupId } =
+      JSON.parse(req.body);
     const product = await prisma.product.create({
       data: {
         name,
         price,
         categoryId,
         productVariantGroupId,
+        taxGroupId,
       },
     });
     return res.status(200).json(product);

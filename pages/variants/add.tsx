@@ -47,7 +47,7 @@ const AddVariant: NextPage = () => {
             <option key={variantgroup.id} value={variantgroup.id}>{variantgroup.name}</option>
           ))}
         </select>
-        <button onClick={() => handleAddVariant()}>Add Variant Group</button>
+        <button onClick={() => handleAddVariant()}>Add Variant</button>
       </div>
     </>
   )

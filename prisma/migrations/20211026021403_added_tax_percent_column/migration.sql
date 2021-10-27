@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Tax" ADD COLUMN     "taxPercent" DOUBLE PRECISION NOT NULL DEFAULT 0.0;
