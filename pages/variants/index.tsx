@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import React from "react";
 import useSWR from "swr";
 
-import fetcher from "../../lib/fetcher";
+import fetcher from "@lib/fetcher";
 
 const Variants: NextPage = () => {
   const { data: variants, error: variantError } = useSWR<any>('/api/variant', fetcher)

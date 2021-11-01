@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import React from "react";
 import useSWR from "swr";
 
-import fetcher from "../../lib/fetcher";
+import fetcher from "@lib/fetcher";
 
 const Taxes: NextPage = () => {
   const { data: taxes, error: taxesError } = useSWR<any>('/api/tax', fetcher)

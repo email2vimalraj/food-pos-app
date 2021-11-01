@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import React from "react";
 import useSWR from "swr";
 
-import fetcher from "../../lib/fetcher";
+import fetcher from "@lib/fetcher";
 import type { ProductVariantGroup } from ".prisma/client";
 
 const AddVariant: NextPage = () => {
