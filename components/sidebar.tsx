@@ -122,7 +122,7 @@ const SideBar = () => {
             </div>
           </a>
           <a
-            href="/"
+            href="/products"
             className="block py-4 px-4 hover:bg-driftwood-500 rounded hover:text-alabaster-300 transition duration-200"
           >
             <div className="flex items-center">
