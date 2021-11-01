@@ -13,7 +13,7 @@ const Layout = ({ children }: Props) => {
       <div className="relative min-h-screen md:flex">
         <SideBar />
 
-        <div className="p-10 text-2xl font-bold flex-1">{children}</div>
+        <div className="p-6 flex-1 text-shark-500">{children}</div>
       </div>
     </>
   );

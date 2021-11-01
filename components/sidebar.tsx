@@ -7,16 +7,16 @@ const SideBar = () => {
   return (
     <>
       {/* mobile menu bar */}
-      <div className="bg-gray-800 text-gray-100 flex justify-between md:hidden">
+      <div className="bg-shark-500 text-alabaster-500 flex justify-between md:hidden">
         {/* logo */}
-        <a href="/" className="block p-4 text-white font-bold">
+        <a href="/" className="block p-4 text-alabaster-500 font-bold">
           <span className="sr-only">PosBox Home Page</span>
           <Image src="/posbox-logo.png" alt="Posbox Logo" width={150} height={29} />
         </a>
 
         {/* mobile menu button */}
         <button
-          className="p-4 focus:outline-none focus:bg-gray-700"
+          className="p-4 focus:outline-none focus:bg-shark-400"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg
@@ -37,7 +37,7 @@ const SideBar = () => {
       </div>
 
       <div
-        className={`bg-gray-800 text-gray-100 w-64 space-y-6 px-2 py-7 absolute inset-y-0 left-0 transform ${
+        className={`bg-shark-500 text-alabaster-500 w-64 space-y-6 px-2 py-7 absolute inset-y-0 left-0 transform ${
           !isMenuOpen ? '-translate-x-full' : ''
         } md:relative md:translate-x-0 transition duration-200 ease-out`}
       >
@@ -47,10 +47,10 @@ const SideBar = () => {
         </a>
 
         {/* nav */}
-        <nav className="text-gray-400">
+        <nav className="text-alabaster-600">
           <a
             href="/"
-            className="block py-4 px-4 hover:bg-gray-700 rounded hover:text-gray-50 transition duration-200"
+            className="block py-4 px-4 hover:bg-driftwood-500 rounded hover:text-alabaster-300 transition duration-200"
           >
             <div className="flex items-center">
               <svg
@@ -66,7 +66,7 @@ const SideBar = () => {
           </a>
           <a
             href="/"
-            className="block py-4 px-4 hover:bg-gray-700 rounded hover:text-gray-50 transition duration-200"
+            className="block py-4 px-4 hover:bg-driftwood-500 rounded hover:text-alabaster-300 transition duration-200"
           >
             <div className="flex items-center">
               <svg
@@ -82,7 +82,7 @@ const SideBar = () => {
           </a>
           <a
             href="/"
-            className="block py-4 px-4 hover:bg-gray-700 rounded hover:text-gray-50 transition duration-200"
+            className="block py-4 px-4 hover:bg-driftwood-500 rounded hover:text-alabaster-300 transition duration-200"
           >
             <div className="flex items-center">
               <svg
@@ -102,7 +102,7 @@ const SideBar = () => {
           </a>
           <a
             href="/"
-            className="block py-4 px-4 hover:bg-gray-700 rounded hover:text-gray-50 transition duration-200"
+            className="block py-4 px-4 hover:bg-driftwood-500 rounded hover:text-alabaster-300 transition duration-200"
           >
             <div className="flex items-center">
               <svg
@@ -123,7 +123,7 @@ const SideBar = () => {
           </a>
           <a
             href="/"
-            className="block py-4 px-4 hover:bg-gray-700 rounded hover:text-gray-50 transition duration-200"
+            className="block py-4 px-4 hover:bg-driftwood-500 rounded hover:text-alabaster-300 transition duration-200"
           >
             <div className="flex items-center">
               <svg
@@ -139,7 +139,7 @@ const SideBar = () => {
           </a>
           <a
             href="/"
-            className="block py-4 px-4 hover:bg-gray-700 rounded hover:text-gray-50 transition duration-200"
+            className="block py-4 px-4 hover:bg-driftwood-500 rounded hover:text-alabaster-300 transition duration-200"
           >
             <div className="flex items-center">
               <svg
