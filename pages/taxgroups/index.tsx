@@ -1,15 +1,15 @@
-import type { NextPage } from "next";
-import React from "react";
-import useSWR from "swr";
+import type { NextPage } from 'next';
+import React from 'react';
+import useSWR from 'swr';
 
-import fetcher from "@lib/fetcher";
-import type { TaxGroup } from ".prisma/client";
+import fetcher from '@lib/fetcher';
+import type { TaxGroup } from '.prisma/client';
 
 const TaxGroups: NextPage = () => {
-  const { data, error } = useSWR<any>('/api/taxgroup', fetcher)
+  const { data, error } = useSWR<any>('/api/taxgroup', fetcher);
 
-  if (error) return <div>An error occured.</div>
-  if (!data) return <div>Loading ...</div>
+  if (error) return <div>An error occured.</div>;
+  if (!data) return <div>Loading ...</div>;
 
   return (
     <>
