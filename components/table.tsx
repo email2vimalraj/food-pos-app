@@ -8,6 +8,7 @@ import {
   useTable
 } from 'react-table';
 import { Button, PageButton } from './button';
+import { SortDownIcon, SortIcon, SortUpIcon } from './icons';
 
 // This is a custom filter UI for selecting a unique option from list
 export const SelectColumnFilter = ({
@@ -147,12 +148,24 @@ const Table = ({ columns, data }: Props) => {
                         // we can add them into the header props
                         <th
                           scope="col"
-                          className="px-6 text-left text-sm font-medium text-shark-500 uppercase tracking-wider"
+                          className="group px-6 text-left text-sm font-medium text-shark-500 uppercase tracking-wider"
                           {...column.getHeaderProps(column.getSortByToggleProps())}
                         >
-                          {column.render('Header')}
-                          {/* Add a sort direction indicator */}
-                          <span>{column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}</span>
+                          <div className="flex items-center justify-between">
+                            {column.render('Header')}
+                            {/* Add a sort direction indicator */}
+                            <span>
+                              {column.isSorted ? (
+                                column.isSortedDesc ? (
+                                  <SortDownIcon className="w-4 h-4 text-shark-400" />
+                                ) : (
+                                  <SortUpIcon className="w-4 h-4 text-shark-400" />
+                                )
+                              ) : (
+                                <SortIcon className="w-4 h-4 text-shark-400 opacity-0 group-hover:opacity-100" />
+                              )}
+                            </span>
+                          </div>
                         </th>
                       ))}
                     </tr>
