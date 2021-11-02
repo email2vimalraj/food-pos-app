@@ -1,5 +1,12 @@
 import React from 'react';
-import { useAsyncDebounce, useFilters, useGlobalFilter, useSortBy, useTable } from 'react-table';
+import {
+  useAsyncDebounce,
+  useFilters,
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable
+} from 'react-table';
 
 // This is a custom filter UI for selecting a unique option from list
 export const SelectColumnFilter = ({
@@ -67,8 +74,20 @@ const Table = ({ columns, data }: Props) => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
+
+    page, // instead of using 'rows', we'll use page,
+    // which has only the rows for the active page
+
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+
     state,
     preGlobalFilteredRows,
     setGlobalFilter
@@ -79,7 +98,8 @@ const Table = ({ columns, data }: Props) => {
     },
     useFilters,
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
   return (
@@ -119,7 +139,7 @@ const Table = ({ columns, data }: Props) => {
         </thead>
 
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {page.map((row, i) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -131,6 +151,40 @@ const Table = ({ columns, data }: Props) => {
           })}
         </tbody>
       </table>
+
+      {/* pagination */}
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
+        <span>
+          Page{' '}
+          <strong>
+            {state.pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+        <select
+          value={state.pageSize}
+          onChange={e => {
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          {[5, 10, 20].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div>
         <pre>
