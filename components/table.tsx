@@ -7,6 +7,7 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
+import { Button, PageButton } from './button';
 
 // This is a custom filter UI for selecting a unique option from list
 export const SelectColumnFilter = ({
@@ -104,23 +105,25 @@ const Table = ({ columns, data }: Props) => {
 
   return (
     <>
-      {/* global search filter */}
-      {/* <GlobalFilter
+      <div className="flex gap-x-2">
+        {/* global search filter */}
+        {/* <GlobalFilter
         preGlobalFilteredRows={preGlobalFilteredRows}
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       /> */}
 
-      {headerGroups.map(headerGroup =>
-        headerGroup.headers.map(column =>
-          column.Filter ? (
-            <div className="sm:px-6 lg:px-8" key={column.id}>
-              <label htmlFor={column.id}>{column.render('Header')}: </label>
-              {column.render('Filter')}
-            </div>
-          ) : null
-        )
-      )}
+        {headerGroups.map(headerGroup =>
+          headerGroup.headers.map(column =>
+            column.Filter ? (
+              <div className="sm:px-6 lg:px-8" key={column.id}>
+                <label htmlFor={column.id}>{column.render('Header')}: </label>
+                {column.render('Filter')}
+              </div>
+            ) : null
+          )
+        )}
+      </div>
 
       {/* table */}
       <div className="mt-2 flex flex-col">
@@ -174,6 +177,126 @@ const Table = ({ columns, data }: Props) => {
       </div>
 
       {/* pagination */}
+      <div className="py-3 flex items-center justify-between">
+        <div className="flex-1 flex justify-between sm:hidden">
+          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            Previous
+          </Button>
+          <Button onClick={() => nextPage()} disabled={!canNextPage}>
+            Next
+          </Button>
+        </div>
+
+        <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+          <div className="flex gap-x-2">
+            <span className="text-sm text-alabaster-800">
+              Page <span className="font-medium">{state.pageIndex + 1}</span>
+            </span>
+
+            <select
+              value={state.pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value));
+              }}
+            >
+              {[5, 10, 20].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <nav
+              className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+              aria-label="Pagination"
+            >
+              <PageButton
+                className="rounded-l-md"
+                onClick={() => gotoPage(0)}
+                disabled={!canPreviousPage}
+              >
+                <span className="sr-only">First</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                  />
+                </svg>
+              </PageButton>
+
+              <PageButton onClick={() => previousPage()} disabled={!canPreviousPage}>
+                <span className="sr-only">Previous</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </PageButton>
+
+              <PageButton onClick={() => nextPage()} disabled={!canNextPage}>
+                <span className="sr-only">Next</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </PageButton>
+
+              <PageButton
+                className="rounded-r-md"
+                onClick={() => gotoPage(pageCount - 1)}
+                disabled={!canNextPage}
+              >
+                <span className="sr-only">Last</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                  />
+                </svg>
+              </PageButton>
+            </nav>
+          </div>
+        </div>
+      </div>
+
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
