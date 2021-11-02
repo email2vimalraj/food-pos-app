@@ -11,7 +11,7 @@ import { Button, PageButton } from './button';
 
 // This is a custom filter UI for selecting a unique option from list
 export const SelectColumnFilter = ({
-  column: { filterValue, setFilter, preFilteredRows, id }
+  column: { filterValue, setFilter, preFilteredRows, id, render }
 }: any) => {
   // Calculate the options for filtering using the preFilteredRows
   const options = React.useMemo(() => {
@@ -24,21 +24,25 @@ export const SelectColumnFilter = ({
 
   // Render a multi-select box
   return (
-    <select
-      name={id}
-      id={id}
-      value={filterValue}
-      onChange={e => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option: any, i: number) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    <label className="flex gap-x-2 items-baseline">
+      <span className="text-shark-700">{render('Header')}</span>
+      <select
+        name={id}
+        id={id}
+        className="mt-1 block w-full rounded-md border-shark-300 shadow-sm focus:border-driftwood-500 focus:ring focus:ring-driftwood-400 focus:ring-opacity-50"
+        value={filterValue}
+        onChange={e => {
+          setFilter(e.target.value || undefined);
+        }}
+      >
+        <option value="">All</option>
+        {options.map((option: any, i: number) => (
+          <option key={i} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 };
 
@@ -51,17 +55,21 @@ const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter }: 
   }, 200);
 
   return (
-    <span>
-      Search:{' '}
-      <input
-        value={value || ''}
-        onChange={e => {
-          setValue(e.target.value);
-          onChange(e.target.value);
-        }}
-        placeholder={`${count} records...`}
-      />
-    </span>
+    <label className="flex gap-x-2 items-baseline">
+      <span className="text-shark-700">
+        Search:{' '}
+        <input
+          type="text"
+          className="mt-1 block w-full rounded-md border-shark-300 shadow-sm focus:border-driftwood-500 focus:ring focus:ring-driftwood-400 focus:ring-opacity-50"
+          value={value || ''}
+          onChange={e => {
+            setValue(e.target.value);
+            onChange(e.target.value);
+          }}
+          placeholder={`${count} records...`}
+        />
+      </span>
+    </label>
   );
 };
 
@@ -117,7 +125,7 @@ const Table = ({ columns, data }: Props) => {
           headerGroup.headers.map(column =>
             column.Filter ? (
               <div className="sm:px-6 lg:px-8" key={column.id}>
-                <label htmlFor={column.id}>{column.render('Header')}: </label>
+                {/* <label htmlFor={column.id}>{column.render('Header')}: </label> */}
                 {column.render('Filter')}
               </div>
             ) : null
@@ -190,21 +198,28 @@ const Table = ({ columns, data }: Props) => {
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div className="flex gap-x-2">
             <span className="text-sm text-alabaster-800">
-              Page <span className="font-medium">{state.pageIndex + 1}</span>
+              Page{' '}
+              <span className="font-medium">
+                {state.pageIndex + 1} of {pageCount}
+              </span>
             </span>
 
-            <select
-              value={state.pageSize}
-              onChange={e => {
-                setPageSize(Number(e.target.value));
-              }}
-            >
-              {[5, 10, 20].map(pageSize => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
+            <label>
+              <span className="sr-only">Items Per Page</span>
+              <select
+                className="mt-1 block w-full rounded-md border-shark-300 shadow-sm focus:border-driftwood-500 focus:ring focus:ring-driftwood-400 focus:ring-opacity-50"
+                value={state.pageSize}
+                onChange={e => {
+                  setPageSize(Number(e.target.value));
+                }}
+              >
+                {[5, 10, 20].map(pageSize => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
 
           <div>
@@ -297,7 +312,7 @@ const Table = ({ columns, data }: Props) => {
         </div>
       </div>
 
-      <div className="pagination">
+      {/* <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -328,7 +343,7 @@ const Table = ({ columns, data }: Props) => {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
       <div>
         <pre>
