@@ -104,6 +104,7 @@ const Table = ({ columns, data }: Props) => {
 
   return (
     <>
+      {/* global search filter */}
       {/* <GlobalFilter
         preGlobalFilteredRows={preGlobalFilteredRows}
         globalFilter={state.globalFilter}
@@ -113,7 +114,7 @@ const Table = ({ columns, data }: Props) => {
       {headerGroups.map(headerGroup =>
         headerGroup.headers.map(column =>
           column.Filter ? (
-            <div key={column.id}>
+            <div className="sm:px-6 lg:px-8" key={column.id}>
               <label htmlFor={column.id}>{column.render('Header')}: </label>
               {column.render('Filter')}
             </div>
@@ -121,36 +122,56 @@ const Table = ({ columns, data }: Props) => {
         )
       )}
 
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                // Add the sorting props to control sorting. For this example
-                // we can add them into the header props
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  {/* Add a sort direction indicator */}
-                  <span>{column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}</span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
+      {/* table */}
+      <div className="mt-2 flex flex-col">
+        <div className="overflow-x-auto">
+          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="shadow overflow-hidden border-b border-shark-300 sm:rounded-lg">
+              <table {...getTableProps()} className="min-w-full divide-y divide-shark-300">
+                <thead className="bg-shark-50">
+                  {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map(column => (
+                        // Add the sorting props to control sorting. For this example
+                        // we can add them into the header props
+                        <th
+                          scope="col"
+                          className="px-6 text-left text-sm font-medium text-shark-500 uppercase tracking-wider"
+                          {...column.getHeaderProps(column.getSortByToggleProps())}
+                        >
+                          {column.render('Header')}
+                          {/* Add a sort direction indicator */}
+                          <span>{column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}</span>
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
 
-        <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                <tbody
+                  {...getTableBodyProps()}
+                  className="bg-alabaster-50 divide-y divide-shark-300"
+                >
+                  {page.map((row, i) => {
+                    prepareRow(row);
+                    return (
+                      <tr {...row.getRowProps()}>
+                        {row.cells.map(cell => {
+                          return (
+                            <td className="px-6 py-4 whitespace-nowrap" {...cell.getCellProps()}>
+                              {cell.render('Cell')}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* pagination */}
       <div className="pagination">
