@@ -45,7 +45,15 @@ const Products: NextPage = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold">Products</h1>
+      <div className="flex justify-between">
+        <h1 className="text-3xl font-bold">Products</h1>
+        <a
+          href="/products/add"
+          className="bg-driftwood-500 text-alabaster-500 p-2 rounded shadow-lg hover:bg-driftwood-600 hover:text-alabaster-400 no-underline outline-none"
+        >
+          Add Products
+        </a>
+      </div>
 
       <div className="mt-4">
         <Table columns={columns} data={data} />
