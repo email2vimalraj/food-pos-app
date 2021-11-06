@@ -11,7 +11,8 @@ export default async function handle(
     const products = await prisma.product.findMany({
       include: {
         category: true,
-        variantGroup: true
+        variantGroup: true,
+        taxGroup: true
       }
     });
     return res.status(200).json(products);

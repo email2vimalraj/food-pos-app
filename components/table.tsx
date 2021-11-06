@@ -358,11 +358,11 @@ const Table = ({ columns, data }: Props) => {
         </select>
       </div> */}
 
-      <div>
+      {/* <div>
         <pre>
           <code>{JSON.stringify(state, null, 2)}</code>
         </pre>
-      </div>
+      </div> */}
     </>
   );
 };
